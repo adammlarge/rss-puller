@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Tip of the Day</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Random Tip of the Day:</h1>
+        <div class="content">
+            <p>{{ content }}</p>
+            <a href="{{ link }}" target="_blank">Read more</a>
+        </div>
+    </div>
+</body>
+</html>

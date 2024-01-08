@@ -3,6 +3,7 @@ from flask_basicauth import BasicAuth
 import feedparser
 import hashlib
 from datetime import datetime, timedelta
+import time, random
 
 app = Flask(__name__)
 basic_auth = BasicAuth(app)
