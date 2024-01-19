@@ -105,7 +105,24 @@ class Feed(object):
 
 @app.route('/')
 def display_content():
-    # Choose a random feed
+    rss_feeds = [
+        'https://thedutchphdcoach.com/feed/',
+        'https://phdlife.warwick.ac.uk/feed/',
+        'https://phdizone.com/feed/',
+        'https://thesiswhisperer.com/feed/',
+        'https://www.thedissertationcoach.com/feed/',
+        'https://www.facultyfocus.com/feed/',
+        'https://careerkarma.com/blog/feed/',
+        'https://www.workitdaily.com/feeds/blog.rss',
+        'https://theslowacademic.com/feed/',
+        'https://phdinahundredsteps.com/feed/',
+        'https://researchwhisperer.org/feed/',
+        'https://phdwritingassistance.com/blog/index.php/feed/',
+        'https://www.job-hunt.org/job-search-advice/feed/',
+        'https://zenhabits.net/feed/',
+        'https://every.to/superorganizers/feed.xml',
+    ]
+
     if rss_feeds:
         random_feed = random.choice(rss_feeds)
         
