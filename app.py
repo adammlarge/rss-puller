@@ -65,12 +65,11 @@ def get_published_date(item):
 def get_random_item(feed_url, seed):
     feed = feedparser.parse(feed_url)
     items = feed.entries
-
+    print(len(items))
     # Filter items within the last year and not chosen before
     recent_items = [
         item for item in items
         if get_published_date(item) and datetime.fromtimestamp(time.mktime(get_published_date(item))) > datetime.now() - timedelta(days=365)
-        and item.link not in chosen_items
     ]
 
     print(len(recent_items))
