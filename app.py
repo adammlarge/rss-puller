@@ -4,6 +4,7 @@ import feedparser
 import hashlib
 from datetime import datetime, timedelta
 import time, random
+import logging
 
 app = Flask(__name__)
 basic_auth = BasicAuth(app)
@@ -72,7 +73,7 @@ def get_random_item(feed_url, seed):
         and item.link not in chosen_items
     ]
 
-
+    print(len(recent_items))
     if not recent_items:
         return None
 
@@ -129,10 +130,10 @@ def display_content():
         print(random_feed)
         # Generate a seed based on the current date
         today_seed = hashlib.sha256(str(datetime.utcnow().date()).encode()).hexdigest()
-
+        print(today_seed)
         # Get a random item from the chosen feed using the seed
         random_item = get_random_item(random_feed, today_seed)
-        
+        # print(random_item)
         todays_feeds=rss_feeds
         
         if not random_item:
