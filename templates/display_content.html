@@ -7,15 +7,48 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Random Content of the Day:</h1>
-        <div class="encouragement">
-            <p>{{ encouragement_phrase }}</p>
+    <div class="main-container">
+        <div class="container">
+            <h1>Random Content of the Day:</h1>
+            <div class="encouragement">
+                <p>{{ encouragement_phrase }}</p>
+            </div>
+            <div class="content">
+                <p>{{ content }}</p>
+                <a href="{{ link }}" target="_blank">Read more</a>
+            </div>
+            
+            <!-- Add the slider scale -->
+            <div class="rating-form">
+                <form action="/rate" method="POST">
+                    <label for="rating">Rate this content (0-10):</label>
+                    <input type="range" id="rating" name="rating" min="0" max="10" step="1" value="5">
+                    <output for="rating">5</output>
+                    <input type="hidden" name="feed_url" value="{{ feed_link }}">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
         </div>
-        <div class="content">
-            <p>{{ content }}</p>
-            <a href="{{ link }}" target="_blank">Read more</a>
+
+        <div class="container">
+            <h1>Ollie Bear!</h1>
+            <div class="image-gallery">
+                <!-- Images will be displayed here -->
+                {% for image in images %}
+                <img src="{{ url_for('static', filename='jpg/' + image) }}" alt="{{ image }}">
+                {% endfor %}
+            </div>
         </div>
     </div>
+
+    <script>
+        var slider = document.getElementById("rating");
+        var output = document.querySelector("output[for='rating']");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        }
+    </script>
 </body>
 </html>

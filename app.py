@@ -1,10 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_basicauth import BasicAuth
 import feedparser
 import hashlib
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import time, random
 import logging
+import csv
+import os
+
 
 app = Flask(__name__)
 basic_auth = BasicAuth(app)
@@ -29,22 +32,27 @@ rss_feeds = [
 ]
 
 
+# encouragement_phrases = [
+#     "You're making a difference.",
+#     "Keep pushing forward.",
+#     "Your efforts matter.",
+#     "Your potential is limitless.",
+#     "Success is within your reach.",
+#     "Your hard work will pay off.",
+#     "Stay positive and keep going.",
+#     "You're on the right track.",
+#     "Your resilience is inspiring.",
+#     "Every step is progress.",
+#     "You are enough.",
+#     "Keep going!",
+#     "I'm proud of what you've accomplished.",
+#     "There are always people rooting for you.",
+#     "Take care of yourself.",
+# ]
+
 encouragement_phrases = [
-    "You're making a difference.",
-    "Keep pushing forward.",
-    "Your efforts matter.",
-    "Your potential is limitless.",
-    "Success is within your reach.",
-    "Your hard work will pay off.",
-    "Stay positive and keep going.",
-    "You're on the right track.",
-    "Your resilience is inspiring.",
-    "Every step is progress.",
-    "You are enough.",
-    "Keep going!",
-    "I'm proud of what you've accomplished.",
-    "There are always people rooting for you.",
-    "Take care of yourself.",
+    "Happy Birthday!",
+    "Happy Birthday!"
 ]
 
 chosen_items = set()
@@ -97,6 +105,46 @@ def get_random_encouragement_phrase():
 
     return chosen_phrase
 
+@app.route('/rate', methods=['POST'])
+def rate_feed():
+    print(request.form)
+    rating = int(request.form['rating'])
+
+    feed_url = request.form['feed_url']
+
+    save_to_csv(feed_url, rating)
+
+    return 'Thank you for rating the quote!'
+
+def save_to_csv(feed_url, rating):
+    today = date.today().strftime("%Y-%m-%d")
+
+    # Check if the date already exists in the CSV file
+    with open('content_ratings.csv', mode='r', newline='') as file:
+        reader = csv.reader(file)
+        rows = list(reader)
+        for row in rows:
+            if row and row[0] == today:
+                row[1] = feed_url  # Update the quote
+                row[2] = rating  # Update the rating
+                break
+        else:
+            # If the date does not exist, append a new row
+            rows.append([today, feed_url, rating])
+
+    # Write all the rows back to the CSV file
+    with open('content_ratings.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(rows)
+
+def get_image_filenames():
+    image_dir = os.path.join(app.static_folder, 'jpg')
+    if os.path.exists(image_dir):
+        return sorted(os.listdir(image_dir))
+    else:
+        return []
+
+
 class Feed(object):
 
     def __init__(self,title="Sorry, something went wrong today"):
@@ -147,8 +195,15 @@ def display_content():
         random_item = Feed(title="I can't find a new tip for today")
 
     encouragement_phrase = get_random_encouragement_phrase()
-
-    return render_template('display_content.html', content=random_item.title, link=random_item.link,encouragement_phrase=encouragement_phrase)
+    images = get_image_filenames()
+    return render_template(
+        'display_content.html',
+        content=random_item.title,
+        link=random_item.link,
+        encouragement_phrase=encouragement_phrase,
+        feed_link=random_feed,
+        images=images,
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
