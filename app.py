@@ -114,12 +114,12 @@ def rate_feed():
     rating = int(request.form['rating'])
 
     feed_url = request.form['feed_url']
-
-    save_to_csv(feed_url, rating)
+    link = request.form['link']
+    save_to_csv(feed_url, link, rating)
 
     return 'Thank you for rating the quote!'
 
-def save_to_csv(feed_url, rating):
+def save_to_csv(feed_url,link, rating):
     today = date.today().strftime("%Y-%m-%d")
 
     # Check if the date already exists in the CSV file
@@ -127,12 +127,12 @@ def save_to_csv(feed_url, rating):
         reader = csv.reader(file)
         rows = list(reader)
         for row in rows:
-            if row and row[0] == feed_url:
-                row[2] = rating  # Update the rating
+            if row and row[2] == link:
+                row[3] = rating  # Update the rating
                 break
         else:
             # If the date does not exist, append a new row
-            rows.append([today, feed_url, rating])
+            rows.append([today, feed_url, link, rating])
 
     # Write all the rows back to the CSV file
     with open('content_ratings.csv', mode='w', newline='') as file:
