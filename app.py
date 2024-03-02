@@ -32,28 +32,25 @@ rss_feeds = [
 ]
 
 
-# encouragement_phrases = [
-#     "You're making a difference.",
-#     "Keep pushing forward.",
-#     "Your efforts matter.",
-#     "Your potential is limitless.",
-#     "Success is within your reach.",
-#     "Your hard work will pay off.",
-#     "Stay positive and keep going.",
-#     "You're on the right track.",
-#     "Your resilience is inspiring.",
-#     "Every step is progress.",
-#     "You are enough.",
-#     "Keep going!",
-#     "I'm proud of what you've accomplished.",
-#     "There are always people rooting for you.",
-#     "Take care of yourself.",
-# ]
-
 encouragement_phrases = [
-    "Happy Birthday!",
-    "Happy Birthday!"
+    "You're making a difference.",
+    "Keep pushing forward.",
+    "Your efforts matter.",
+    "Your potential is limitless.",
+    "Success is within your reach.",
+    "Your hard work will pay off.",
+    "Stay positive and keep going.",
+    "You're on the right track.",
+    "Your resilience is inspiring.",
+    "Every step is progress.",
+    "You are enough.",
+    "Keep going!",
+    "I'm proud of what you've accomplished.",
+    "There are always people rooting for you.",
+    "Take care of yourself.",
 ]
+
+
 
 chosen_items = set()
 used_phrases = set()
