@@ -29,6 +29,9 @@ rss_feeds = [
     'https://www.job-hunt.org/job-search-advice/feed/',
     'https://zenhabits.net/feed/',
     'https://every.to/superorganizers/feed.xml',
+    'https://www.grammarly.com/blog/feed/', 
+    'https://www.arthistorynews.com/rss/articles.rss',
+    'https://visualisingchina.net/blog/feed/'
 ]
 
 
@@ -43,7 +46,10 @@ encouragement_phrases = [
     "You're on the right track.",
     "Your resilience is inspiring.",
     "Every step is progress.",
-    "You are enough.",
+    "You have the skils and the drive to accomplish your goals.",
+    "Take a moment and appreciate the chunk",
+    "Every day you help yourself is a day well spent",
+    "Don't push yourself too hard. You've done so much, you should be proud",
     "Keep going!",
     "I'm proud of what you've accomplished.",
     "There are always people rooting for you.",
@@ -121,8 +127,7 @@ def save_to_csv(feed_url, rating):
         reader = csv.reader(file)
         rows = list(reader)
         for row in rows:
-            if row and row[0] == today:
-                row[1] = feed_url  # Update the quote
+            if row and row[0] == feed_url:
                 row[2] = rating  # Update the rating
                 break
         else:
