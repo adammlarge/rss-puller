@@ -7,7 +7,7 @@ import time, random
 import logging
 import csv
 import os
-
+import hashlib
 
 app = Flask(__name__)
 basic_auth = BasicAuth(app)
@@ -139,16 +139,14 @@ def save_to_csv(feed_url,link, rating):
         writer = csv.writer(file)
         writer.writerows(rows)
 
-import os
-import hashlib
-import datetime
+
 
 def get_image_filenames():
     image_dir = os.path.join(app.static_folder, 'jpg')
     if os.path.exists(image_dir):
         images = sorted(os.listdir(image_dir))
         
-        current_date = datetime.datetime.now().date()
+        current_date = datetime.now().date()
         
         hash_object = hashlib.sha256(str(current_date).encode())
         hash_hex = hash_object.hexdigest()
@@ -197,7 +195,7 @@ def display_content():
         
         print(random_feed)
         # Generate a seed based on the current date
-        today_seed = hashlib.sha256(str(datetime.utcnow().date()).encode()).hexdigest()
+        today_seed = hashlib.sha256(str(datetime.now().date()).encode()).hexdigest()
         print(today_seed)
         # Get a random item from the chosen feed using the seed
         random_item = get_random_item(random_feed, today_seed)
