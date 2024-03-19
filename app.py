@@ -139,10 +139,29 @@ def save_to_csv(feed_url,link, rating):
         writer = csv.writer(file)
         writer.writerows(rows)
 
+import os
+import hashlib
+import datetime
+
 def get_image_filenames():
     image_dir = os.path.join(app.static_folder, 'jpg')
     if os.path.exists(image_dir):
-        return sorted(os.listdir(image_dir))
+        images = sorted(os.listdir(image_dir))
+        
+        current_date = datetime.datetime.now().date()
+        
+        hash_object = hashlib.sha256(str(current_date).encode())
+        hash_hex = hash_object.hexdigest()
+        
+        hash_int = int(hash_hex, 16)
+        
+        num_images = len(images)
+        
+        num_to_select = 6
+        
+        selected_images = [images[i % num_images] for i in range(hash_int, hash_int + num_to_select)]
+        
+        return selected_images
     else:
         return []
 
