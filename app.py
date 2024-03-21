@@ -110,14 +110,15 @@ def get_random_encouragement_phrase():
 
 @app.route('/rate', methods=['POST'])
 def rate_feed():
+    # Your existing code to handle the form data
     print(request.form)
     rating = int(request.form['rating'])
-
     feed_url = request.form['feed_url']
     link = request.form['link']
     save_to_csv(feed_url, link, rating)
 
-    return 'Thank you for rating the quote!'
+    # Render the thank_you.html template
+    return render_template('thank_you.html', message='Thank you for rating the article!')
 
 def save_to_csv(feed_url,link, rating):
     today = date.today().strftime("%Y-%m-%d")
