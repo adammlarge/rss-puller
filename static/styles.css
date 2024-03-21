@@ -61,6 +61,7 @@ a:visited {
     overflow-x: auto;
     scrollbar-width: none; /* Hide scrollbar for Firefox */
     -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+    -webkit-overflow-scrolling: touch;
 }
 
 .image-gallery::-webkit-scrollbar {
@@ -71,5 +72,11 @@ a:visited {
     flex: 0 0 auto;
     height: 300px; /* Set the height of the images */
     margin-right: 10px; /* Add some space between images */
+    min-width: 100px; /* Adjust based on your needs */
     object-fit: cover; /* Scale the images to cover the container */
+}
+
+.parent-container { /* Adjust the class name based on your structure */
+    width: 100%;
+    overflow-x: hidden; /* To prevent the entire page from scrolling horizontally */
 }
